@@ -42,3 +42,28 @@ task buildApks {
         println "Release APK: app/build/outputs/apk/release/app-release.apk"
     }
 }
+
+// Add Java version compatibility task
+task checkJavaVersion {
+    doLast {
+        def javaVersion = System.getProperty('java.version')
+        println "Java Version: $javaVersion"
+        
+        // Check if Java version is 11 or higher
+        def versionParts = javaVersion.split('\\.')
+        def majorVersion = versionParts[0].toInteger()
+        
+        if (majorVersion < 11) {
+            throw new GradleException("Java 11 or higher is required. Current version: $javaVersion")
+        } else {
+            println "✅ Java version is compatible: $javaVersion"
+        }
+    }
+}
+
+// Make sure Java version check runs before any build
+gradle.projectsEvaluated {
+    rootProject.tasks.findAll { it.name.contains('assemble') || it.name.contains('build') }.each { task ->
+        task.dependsOn checkJavaVersion
+    }
+}

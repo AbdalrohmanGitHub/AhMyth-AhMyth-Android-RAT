@@ -1,3 +1,8 @@
+#!/bin/bash
+# Update README_KALI.md with Java requirements
+
+# Create a temporary file with the updated content
+cat > README_KALI_temp.md << 'EOL'
 # AhMyth Android RAT - Kali Linux Setup Guide
 
 ## 📋 Overview
@@ -280,3 +285,10 @@ This tool is provided for educational purposes only. The authors are not respons
 ---
 
 **Remember**: Ethical hacking is about protecting systems, not exploiting them. Use this knowledge responsibly! 🔒
+EOL
+
+# Replace the original file
+mv README_KALI_temp.md README_KALI.md
+chmod 644 README_KALI.md
+
+echo "✅ README_KALI.md updated with Java requirements and troubleshooting!"
