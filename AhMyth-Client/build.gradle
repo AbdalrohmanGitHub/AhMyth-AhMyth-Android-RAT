@@ -2,10 +2,13 @@
 
 buildscript {
     repositories {
+        google()
+        mavenCentral()
+        // Keep jcenter for legacy compatibility
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:7.4.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,10 +17,28 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
+        jcenter() // Keep for legacy compatibility
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+// Wrapper task for easy building
+task buildAll {
+    dependsOn ':app:assembleDebug'
+    dependsOn ':app:assembleRelease'
+}
+
+// Task to build APK for all variants
+task buildApks {
+    dependsOn buildAll
+    doLast {
+        println "APKs built successfully!"
+        println "Debug APK: app/build/outputs/apk/debug/app-debug.apk"
+        println "Release APK: app/build/outputs/apk/release/app-release.apk"
+    }
 }
