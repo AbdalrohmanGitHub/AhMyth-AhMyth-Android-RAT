@@ -58,7 +58,9 @@
         "asarUnpack": "**/app/Factory/**/*"
     },
     "scripts": {
-        "start": "npx electron ./app",
+        "start": "npx electron --no-sandbox ./app",
+        "start-root": "npx electron --no-sandbox ./app",
+        "start-user": "npx electron ./app",
         "clean": "rm -rf ./dist",
         "build": "npm run build:all",
         "build:all": "npm run build:linux && npm run build:win && npm run build:mac",
